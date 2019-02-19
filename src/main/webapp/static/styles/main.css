@@ -1,0 +1,103 @@
+html{
+    display: block;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+body{
+    height: 100%;
+    background: #000;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*****_______ HEADER _______*****/ 
+.header{
+    width: 100%;
+    height: 150px;
+    background: #000;
+}
+.header ul{
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    
+}
+/* .header ul  */
+.header li {
+    display: inline;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+.header ul li+li{
+    margin-left:10px ;
+}
+.header .user{ 
+    float: right;
+}
+.header ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}
+.header ul li :hover{
+    padding: 25px;
+}
+.header ul  .active{
+    background: lightgrey;
+}
+.header .button{
+    margin:5px 20px 0 0;
+    float: right;
+}
+
+/*****_______ CONTENT_______*****/ 
+.content{
+    width: 100%;
+    background: white;
+    flex-grow: 1;
+    white-space: wrap;
+}
+.products_bloc{
+    margin: 50px 2%;
+    height: 360px;
+    width: 20%;
+    border: 1px solid black;
+    float: left;
+ }
+ .products_bloc a{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+ }
+ .products_bloc p{
+    padding-left: 5px ;
+ }
+ img{
+    padding: 4px;
+    height: 192px;
+    width: 222px;
+ }
+ .products_bloc_p :hover {
+ 	backgtound:#454;
+ 	border-radius:15px;
+ }
+/*****_______ FOOTER _______*****/ 
+.footer{
+    width: 100%;
+    height: 35px;
+    background: #000;
+    margin: 0;
+}
+.footer p{
+    padding-top:10px;
+    text-align: center;
+    margin: 0;
+    color: white;
+}
