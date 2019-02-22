@@ -6,7 +6,7 @@ html{
     padding: 0;
 }
 body{
-    height: 100%;
+/*    height: 100%; */
     background: #000;
     width: 100%;
     display: flex;
@@ -61,6 +61,12 @@ body{
     flex-grow: 1;
     white-space: wrap;
 }
+.content_flex{
+    display: flex;
+    background: white;
+    flex-grow: 1;
+    white-space: wrap;
+}
 .products_bloc{
     margin: 50px 2%;
     height: 360px;
@@ -84,10 +90,34 @@ body{
     height: 192px;
     width: 222px;
  }
- .products_bloc_p :hover {
- 	backgtound:#454;
- 	border-radius:15px;
+ .content_left{
+ 	flex-grow: 2;
+ 	flex-wrap: wrap;
+ 	display: flex;
+ 	justify-content: space-around;
+ 	overflow: auto;
  }
+ .content_right{
+ 	flex-grow: 1;
+ }
+ .content_box{
+ 	height: 300px;
+ 	width: 30%;
+ 	margin: 15px;
+}
+.content_right_p{
+	padding: 100px 0 0 0;
+}
+.chek{
+    width: 300px;
+}
+.chek p{
+    padding: 15px 30px;
+    border-bottom: 1px solid black; 
+}
+.chek_button{
+    text-align: center;
+}
 /*****_______ FOOTER _______*****/ 
 .footer{
     width: 100%;

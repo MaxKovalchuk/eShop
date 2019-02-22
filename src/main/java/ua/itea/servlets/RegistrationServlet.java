@@ -126,9 +126,10 @@ public class RegistrationServlet extends HttpServlet {
 //				+ "\ngender: " + gender + "\naddress: " + address + "\n comment: " + comment + "\nagree: " + agree
 //				+ "\n error: " + error + "\nform: " + form + "\nerror text: " + errorText);
 		HttpSession session = request.getSession();
-		UserController.logout(request, session);
 		request.setAttribute("session", session);
-		rd.forward(request, response);
+		try {
+			rd.forward(request, response);
+		} catch (IllegalStateException ex) {}
 	}
 
 }

@@ -44,7 +44,6 @@ public class AuthorizationServlet extends HttpServlet {
 			if (request.getAttribute("logout") == null)
 				request.setAttribute("errorText", "<font color = 'red'>Invalid login or password");
 			request.setAttribute("login", login);
-			UserController.logout(request, session);
 			rd.forward(request, response);
 		}
 	}

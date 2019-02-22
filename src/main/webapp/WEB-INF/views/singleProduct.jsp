@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type = 'submit' name = 'buy' value = 'buy'/></td>
+				<td><a href = './cart?productID=${product.id}'>Buy</a></td>
 			</tr>
 		</table>
 	</table>

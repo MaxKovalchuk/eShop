@@ -18,17 +18,19 @@
 
 	<div class="header">
 		<ul>
-			<li><a href="./authorization">LogIn</a></li>
-			<li><a href="./registration">Registrate</a></li>
-			<li><a href="./products">Products</a></li>
-			<li><a href="./cart">Cart: ${sessionScope.cart.size}</a></li>
-			<li class="user"><a href="">User : ${session.getUser().name }</a></li>
+			<c:if test = '${sessionScope.user == null }' >
+			<li <c:if test = '${requestScope.servletPath.equals("/authorization")}'>class = 'active'</c:if>><a href="./authorization">LogIn</a></li>
+			<li <c:if test = '${req.servletPath.equals("/registration")}'>class = 'active'</c:if>><a href="./registration">Registrate</a></li>
+			</c:if>
+			<li <c:if test = '${request.servletPath.equals("/products")}'>class = 'active'</c:if>><a href="./products">Products</a></li>
+			<li <c:if test = '${request.getServletPath().equals("/cart")}'>class = 'active'</c:if>><a href="./cart">Cart: ${sessionScope.cart.size}</a></li>
+			<c:if test = '${sessionScope.user != null }' >
+			<li class="user"><a href="">User : ${sessionScope.user.name}</a></li>
+			</c:if>
 		</ul>
+		<c:if test = '${sessionScope.user != null }' >
 		<div class="button">
-			<form action ='' method='post'>
-				<input type='hidden' name='logout' value = '1' /> 
-				<input type='submit' name='logoutButton' />
-			</form>
-			<!--<button>LogOut</button>-->
+			<a href = '?logout=1'>LogOut</a>
 		</div>
+		</c:if>
 	</div>

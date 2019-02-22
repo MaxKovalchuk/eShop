@@ -25,15 +25,27 @@ public class ProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ProductController pc = new ProductController(new DBWorker());
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/productsView.jsp");
-		List<Product> products = pc.getAllProducts();
-		request.setAttribute("products", products);
+		RequestDispatcher rd = null;
+		if (request.getParameter("productSelected") != null) {
+			rd = request.getRequestDispatcher("WEB-INF/views/singleProduct.jsp");
+			Product product = pc.getProduct(Integer.parseInt(request.getParameter("productSelected")));
+			request.setAttribute("product", product);
+		} else {
+			rd = request.getRequestDispatcher("WEB-INF/views/productsView.jsp");
+			List<Product> products = pc.getAllProducts();
+			request.setAttribute("products", products);
+		}
 		HttpSession session = request.getSession();
+		UserController.logout(request, session, response);
 		request.setAttribute("session", session);
-		rd.forward(request, response);
+		try {
+			rd.forward(request, response);
+		} catch (IllegalStateException ex) {
+		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		ProductController pc = new ProductController(new DBWorker());
 		HttpSession session = request.getSession();
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/productsView.jsp");
@@ -51,12 +63,13 @@ public class ProductServlet extends HttpServlet {
 			rd = request.getRequestDispatcher("WEB-INF/views/singleProduct.jsp");
 			Product product = pc.getProduct(Integer.parseInt(request.getParameter("productSelected")));
 			request.setAttribute("product", product);
-		}else if(request.getAttribute("logout") != null){
-			UserController.logout(request, session);
-			doGet(request, response);
 		}
+		UserController.logout(request, session, response);
 		request.setAttribute("session", session);
-		rd.forward(request, response);
+		try {
+			rd.forward(request, response);
+		} catch (IllegalStateException ex) {
+		}
 	}
 
 }

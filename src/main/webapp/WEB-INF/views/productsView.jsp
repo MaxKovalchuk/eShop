@@ -7,7 +7,7 @@
 	<form action='' method='post'>
 		<table>
 			<tr>
-				<td>Phones </td>
+				<td>Phones</td>
 				<td>Laptops</td>
 				<td>Watches</td>
 			</tr>
@@ -23,48 +23,29 @@
 			</tr>
 		</table>
 	</form>
-	
-		<c:forEach items="${products}" var="str">
-		
-			<div class="products_bloc">
-				<form action='' method='post'>
-					<input type='hidden' name='productSelected' value='${str.id}'>
-					<a>
-						<img src="static/images/${str.id}.jpg">
-					</a>
-					<p>
-						<a>${str.name}</a>
-					</p>
-					<p>
-						<a>${str.price} UAH</a>
-					</p>
-					<p>
-						<input name='lookCloser' type='submit' value='Look closer'>
-					</p>
-					<p class='.products_bloc_p'>
-						<a href = './cart?productID=${str.id}'>Buy</a>
-					</p>
-				</form>
-			</div>
-			
-		</c:forEach>
+
+	<c:forEach items="${products}" var="str">
+
+		<div class="products_bloc">
+			<a href='?productSelected=${str.id}'> <img
+				src="static/images/${str.id}.jpg">
+			</a>
+			<p>
+				<a href='?productSelected=${str.id}'>${str.name}</a>
+			</p>
+			<p>
+				<a>${str.price} UAH</a>
+			</p>
+			<p class='.products_bloc_p'>
+				<input type='button' onclick="minus('${str.id}')" value='-' /><span
+					id='q${str.id}'>1</span> <input type='button'
+					onclick="plus('${str.id}')" value='+' /> <input type='button'
+					onclick="buy('${str.id}')" value='Buy' />
+			</p>
+		</div>
+
+	</c:forEach>
 </center>
 <%@include file="../../static/inc/footer.jsp"%>
-	<!-- <td>
-				<form action='' method='post'>
-					<input type='hidden' name='productSelected' value='${str.id}'>
-					<p>
-						<img src='static/images/${str.id}.jpg' height='300px' width='175px' />
-					</p>
-					<p>${str.name}</p>
-					<p>${str.price}</p>
-					<p>
-						<input name='lookCloser' type='submit' value='Look closer'>
-					</p>
-				</form>
-			</td>
-			<c:set var="i" value="${i + 1}" />
-			<c:if test="${i == 2}">
-				</tr>
-				<c:set var="i" value="0" />
-			</c:if> -->
+<script src="static/scripts/jquery-3.3.1.min.js"></script>
+<script src ="static/scripts/toCart.js"></script>

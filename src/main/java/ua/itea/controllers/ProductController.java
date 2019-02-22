@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.ProductDAO;
+import factoryDao.ProductDaoFactory;
 import ua.itea.models.Product;
 
 public class ProductController {
@@ -66,21 +68,12 @@ public class ProductController {
 	}
 
 	public Product getProduct(int id) {
-		Product product = new Product();
-		PreparedStatement pr;
+		ProductDAO pd = null;
 		try {
-			pr = worker.getConn().prepareStatement("SELECT * FROM products WHERE id =" + id);
-			ResultSet rs = pr.executeQuery();
-			if (rs.next()) {
-				product.setId(rs.getInt("id"));
-				product.setName(rs.getString("name"));
-				product.setPrice(rs.getInt("price"));
-				product.setDesc(rs.getString("description"));
-				product.setCategory(rs.getInt("category"));
-			}
-		} catch (SQLException e) {
+			pd = ProductDaoFactory.getProductDAO();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return product;
+		return pd.getProduct(id);
 	}
 }

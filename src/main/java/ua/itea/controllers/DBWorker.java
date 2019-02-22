@@ -1,18 +1,11 @@
 package ua.itea.controllers;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class DBWorker {
 	private final static String GET_USERS = "SELECT * FROM users";
@@ -49,22 +42,6 @@ public class DBWorker {
 		this.conn = conn;
 	}
 
-	public void insert(String login, String password, String name, String age, String gender, String address,
-			String comment) {
-		try {
-			String query = "INSERT INTO users(login, password, name, age, gender, address, comment) VALUES('" + login
-					+ "', '" + hashString(password + salt) + "', '" + name + "', '" + Integer.parseInt(age) + "', '"
-					+ gender + "', '" + address + "', '" + comment + "');";
-			try {
-				st.executeUpdate(query);
-			} catch (MySQLIntegrityConstraintViolationException ex) {
-				System.out.println("such email already exist");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public String getRows() {
 		StringBuilder sb = new StringBuilder();
 		try {
@@ -92,33 +69,5 @@ public class DBWorker {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public String getName(String login, String password) {
-		try {
-			PreparedStatement ps = conn.prepareStatement(CHECK_USER);
-			ps.setString(1, login);
-			ps.setString(2, hashString(password + salt));
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				return rs.getString("name");
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private String hashString(String hash) {
-		MessageDigest md5 = null;
-		try {
-			md5 = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-
-			e.printStackTrace();
-		}
-		md5.update(StandardCharsets.UTF_8.encode(hash));
-		return String.format("%032x", new BigInteger(md5.digest()));
 	}
 }

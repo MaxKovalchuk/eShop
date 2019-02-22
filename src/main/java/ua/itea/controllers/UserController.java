@@ -1,5 +1,6 @@
 package ua.itea.controllers;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,10 +11,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
+import dao.UserDAO;
+import factoryDao.DaoFactory;
 import ua.itea.models.Product;
 import ua.itea.models.User;
 
@@ -26,24 +30,13 @@ public class UserController {
 	}
 
 	public User getUser(int id) {
-		User user = new User();
-		PreparedStatement pr;
+		UserDAO ud = null;
 		try {
-			pr = worker.getConn().prepareStatement("SELECT * FROM users WHERE id =" + id);
-			ResultSet rs = pr.executeQuery();
-			if (rs.next()) {
-				user.setId(rs.getInt("id"));
-				user.setLogin(rs.getString("login"));
-				user.setName(rs.getString("name"));
-				user.setAge(rs.getInt("age"));
-				user.setGender(rs.getString("gender"));
-				user.setAddress(rs.getString("address"));
-				user.setComment(rs.getString("comment"));
-			}
-		} catch (SQLException e) {
+			ud = DaoFactory.getUserDAO();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return user;
+		return ud.getUser(id);
 	}
 
 	public User getUser(String login) {
@@ -83,21 +76,23 @@ public class UserController {
 		return false;
 	}
 
-	public void insert(String login, String password, String name, String age, String gender, String address,
+	public boolean insert(String login, String password, String name, String age, String gender, String address,
 			String comment) {
+		User user = new User();
+		user.setLogin(login);
+		user.setPassword(password);
+		user.setName(name);
+		user.setAge(Integer.parseInt(age));
+		user.setGender(gender);
+		user.setAddress(address);
+		user.setComment(comment);
+		UserDAO ud = null;
 		try {
-			Statement st = worker.getConn().createStatement();
-			String query = "INSERT INTO users(login, password, name, age, gender, address, comment) VALUES('" + login
-					+ "', '" + hashString(password + salt) + "', '" + name + "', '" + Integer.parseInt(age) + "', '"
-					+ gender + "', '" + address + "', '" + comment + "');";
-			try {
-				st.execute(query);
-			} catch (MySQLIntegrityConstraintViolationException ex) {
-				System.out.println("such email already exist");
-			}
-		} catch (SQLException e) {
+			ud = DaoFactory.getUserDAO();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		return ud.createUser(user);
 	}
 
 	private String hashString(String hash) {
@@ -129,12 +124,15 @@ public class UserController {
 		return false;
 	}
 
-	public static void logout(HttpServletRequest request, HttpSession session) {
-		System.out.println(request.getAttribute("logout"));
-		if (request.getAttribute("logout") != null) {
-			System.out.println("we get here");
+	public static void logout(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
+		if (request.getParameter("logout") != null) {
 			if (session != null) {
 				session.invalidate();
+				try {
+					response.sendRedirect(request.getContextPath() + request.getServletPath());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
