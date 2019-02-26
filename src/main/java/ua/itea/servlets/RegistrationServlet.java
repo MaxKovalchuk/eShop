@@ -73,6 +73,10 @@ public class RegistrationServlet extends HttpServlet {
 				error = true;
 				errorText.append("<li>Age invalid value</li>");
 			}
+			if (gender == null) {
+				error = true;
+				errorText.append("<li>Gender empty</li>");
+			}
 			if (gender != null && gender.length() == 0) {
 				error = true;
 				errorText.append("<li>Gender empty</li>");

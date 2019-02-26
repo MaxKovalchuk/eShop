@@ -11,29 +11,39 @@ public class CartController {
 	public static void addProduct(Cart cart, Product product, Integer qnt) {
 		Set<Product> set = cart.getProducts().keySet();
 		if (set.contains(product)) {
-			qnt = cart.getProducts().get(product) + qnt;
+			qnt += cart.getProducts().get(product);
 		}
 		cart.getProducts().put(product, qnt);
-		cart.setSize(cart.getSize() + 1);
-		CartController.setTotalCost(cart);
+		CartController.countCartSize(cart);
+		CartController.countTotalCost(cart);
+	}
+	
+	public static void setProductQnt(Cart cart, Product product, Integer qnt) {
+		Set<Product> set = cart.getProducts().keySet();
+		
+		if (set.contains(product)) {
+			cart.getProducts().put(product, qnt);
+		}
+		cart.getProducts().put(product, qnt);
+		CartController.countCartSize(cart);
+		CartController.countTotalCost(cart);
 	}
 
-	public static void removeProduct(Cart cart, Product product) {
+	public static void removeProduct(Cart cart, Product product, Integer qnt) {
 		Set<Product> set = cart.getProducts().keySet();
-		Integer qnt = cart.getProducts().get(product);
 		if (set.contains(product)) {
-			if (qnt > 1) {
-				qnt = cart.getProducts().get(product) - 1;
+			if (qnt >= cart.getProducts().get(product)) {
+				qnt = cart.getProducts().get(product) - qnt;
 				cart.getProducts().put(product, qnt);
 			} else {
 				removeProductFully(cart, product);
 			}
-			cart.setSize(cart.getSize() - 1);
-			CartController.setTotalCost(cart);
+			CartController.countCartSize(cart);
+			CartController.countTotalCost(cart);
 		}
 	}
 
-	public static void setTotalCost(Cart cart) {
+	public static void countTotalCost(Cart cart) {
 		Set<Product> set = cart.getProducts().keySet();
 		int total = 0;
 		for (Product product : set) {
@@ -44,16 +54,28 @@ public class CartController {
 
 	public static void removeProductFully(Cart cart, Product product) {
 		cart.getProducts().remove(product);
+		CartController.countCartSize(cart);
+		CartController.countTotalCost(cart);
 	}
 
 	public static void cleanCart(Cart cart) {
 		Set<Product> set = cart.getProducts().keySet();
 		Iterator it = set.iterator();
 		while (it.hasNext()) {
-			Product product = (Product) it.next();
+			it.next();
 			it.remove();
 		}
 		cart.setSize(0);
 		cart.setTotalCost(0);
+	}
+	
+	public static void countCartSize(Cart cart) {
+		Set<Product> set = cart.getProducts().keySet();
+		int size = 0;
+		for (Product product : set) {
+			System.out.println(size + " + " + cart.getProducts().get(product));
+			size += cart.getProducts().get(product);
+		}
+		cart.setSize(size);
 	}
 }

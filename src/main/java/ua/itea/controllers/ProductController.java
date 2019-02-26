@@ -76,4 +76,14 @@ public class ProductController {
 		}
 		return pd.getProduct(id);
 	}
+
+	public List<Product> search(String search) {
+		ProductDAO pd = null;
+		try {
+			pd = ProductDaoFactory.getProductDAO();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return pd.getProduct(search);
+	}
 }

@@ -4,6 +4,7 @@
 
 <c:set var="i" value="0" />
 <center class='content'>
+ <form action = '' method = 'get'><input type = 'text' name = 'search'/><input type = 'submit' value = 'Go'/></form>
 	<form action='' method='post'>
 		<table>
 			<tr>
@@ -40,7 +41,8 @@
 				<input type='button' onclick="minus('${str.id}')" value='-' /><span
 					id='q${str.id}'>1</span> <input type='button'
 					onclick="plus('${str.id}')" value='+' /> <input type='button'
-					onclick="buy('${str.id}')" value='Buy' />
+					onclick="buy('${str.id}')"
+					value='Buy' />
 			</p>
 		</div>
 
@@ -48,4 +50,4 @@
 </center>
 <%@include file="../../static/inc/footer.jsp"%>
 <script src="static/scripts/jquery-3.3.1.min.js"></script>
-<script src ="static/scripts/toCart.js"></script>
+<script src="static/scripts/toCart.js"></script>

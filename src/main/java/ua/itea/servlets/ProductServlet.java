@@ -30,6 +30,11 @@ public class ProductServlet extends HttpServlet {
 			rd = request.getRequestDispatcher("WEB-INF/views/singleProduct.jsp");
 			Product product = pc.getProduct(Integer.parseInt(request.getParameter("productSelected")));
 			request.setAttribute("product", product);
+		}else if(request.getParameter("search") != null) {
+			System.out.println("we are searching" + request.getParameter("search"));
+			rd = request.getRequestDispatcher("WEB-INF/views/productsView.jsp");
+			List<Product> products = pc.search(request.getParameter("search"));
+			request.setAttribute("products", products);
 		} else {
 			rd = request.getRequestDispatcher("WEB-INF/views/productsView.jsp");
 			List<Product> products = pc.getAllProducts();

@@ -40,7 +40,7 @@
 						<tr>
 							<td>Address</td>
 							<td><select name="address">
-									<option value='1' ${address1 }>Luganda]</option>
+									<option value='1' ${address1 }>Luganda</option>
 									<option value='2'${address2 }>Donbass</option>
 									<option value='3'${address3 }>Dom</option>
 							</select></td>

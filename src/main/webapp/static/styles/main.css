@@ -6,7 +6,7 @@ html{
     padding: 0;
 }
 body{
-/*    height: 100%; */
+	height:100%;
     background: #000;
     width: 100%;
     display: flex;
@@ -16,14 +16,14 @@ body{
 /*****_______ HEADER _______*****/ 
 .header{
     width: 100%;
-    height: 150px;
+    height: 75px;
     background: #000;
 }
 .header ul{
     list-style: none;
-    padding: 20px;
+    padding: 15px;
     margin: 0;
-    
+    display: flex;
 }
 /* .header ul  */
 .header li {
@@ -35,16 +35,18 @@ body{
 .header ul li+li{
     margin-left:10px ;
 }
-.header .user{ 
-    float: right;
+.header ul .divider{
+	flex-grow:1;
+	background : black;
+	padding: 0;
 }
 .header ul li a {
     text-decoration: none;
     color: black;
-    font-size: 25px;
+    font-size: 22px;
 }
-.header ul li :hover{
-    padding: 25px;
+.hover :hover{
+    padding: 0 25px;
 }
 .header ul  .active{
     background: lightgrey;
@@ -52,8 +54,21 @@ body{
 .header .button{
     margin:5px 20px 0 0;
     float: right;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
 }
-
+.header .button a{
+	text-decoration: none;
+    color: black;
+    font-size: 15px;
+}
+.header ul .logOut {
+	color: white;
+}
+.header ul .black_li{
+	background : black;
+}
 /*****_______ CONTENT_______*****/ 
 .content{
     width: 100%;

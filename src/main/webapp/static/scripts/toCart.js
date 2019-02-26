@@ -13,9 +13,11 @@ function buy(myId) {
 	$.ajax({
 		type : "GET",
 		url : "./cart",
-		data : "productID=" + (myId + "-" + qnt),
+		data : "productID=" + (myId + ":" + qnt),
 		success : function(response) {
 			alert('Product added to cart');
+			var cartSize = +document.getElementById('cart').innerHTML.substr(6) + +qnt;
+			document.getElementById('cart').innerHTML = " Cart: " + cartSize;
 		}
 	});
 }

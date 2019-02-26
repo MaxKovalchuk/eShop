@@ -18,19 +18,37 @@
 
 	<div class="header">
 		<ul>
-			<c:if test = '${sessionScope.user == null }' >
-			<li <c:if test = '${requestScope.servletPath.equals("/authorization")}'>class = 'active'</c:if>><a href="./authorization">LogIn</a></li>
-			<li <c:if test = '${req.servletPath.equals("/registration")}'>class = 'active'</c:if>><a href="./registration">Registrate</a></li>
+			<c:if test='${sessionScope.user == null }'>
+				<li class='hover'><a href="./authorization">LogIn</a></li>
+				<li class='hover'><a href="./registration">Registrate</a></li>
 			</c:if>
-			<li <c:if test = '${request.servletPath.equals("/products")}'>class = 'active'</c:if>><a href="./products">Products</a></li>
-			<li <c:if test = '${request.getServletPath().equals("/cart")}'>class = 'active'</c:if>><a href="./cart">Cart: ${sessionScope.cart.size}</a></li>
-			<c:if test = '${sessionScope.user != null }' >
-			<li class="user"><a href="">User : ${sessionScope.user.name}</a></li>
+			<li class='hover'><a href="./products">Products</a></li>
+			<li class='hover'><a href="./cart" id='cart'> Cart: <c:choose>
+							<c:when test="${sessionScope.cart.size != null}">
+							${sessionScope.cart.size}
+						</c:when>
+							<c:otherwise>0</c:otherwise>
+						</c:choose>
+			</a></li>
+			<li class='divider'></li>
+			<c:if test='${sessionScope.user != null }'>
+				<li class="user hover">
+					<a href="./profile">
+						User:${sessionScope.user.name}
+					</a>	
+				</li>
+				<li class='black_li'>
+					<a href = '?logout=1' class='logOut'>
+						&#9032
+					</a>
+				</li>
 			</c:if>
 		</ul>
-		<c:if test = '${sessionScope.user != null }' >
-		<div class="button">
-			<a href = '?logout=1'>LogOut</a>
-		</div>
-		</c:if>
+
+			<!-- <c:if test='${sessionScope.user != null }'>
+				<div class="button">
+					<a href='?logout=1'>LogOut</a>
+				</div>
+			</c:if>
+			 --> 
 	</div>

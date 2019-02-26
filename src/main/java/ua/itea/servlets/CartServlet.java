@@ -32,25 +32,29 @@ public class CartServlet extends HttpServlet {
 				cart = new Cart();
 			}
 			Product product = new Product();
-			String[] param  = request.getParameter("productID").split("-");
+			String[] param = request.getParameter("productID").split(":");
 			product = pc.getProduct(Integer.parseInt(param[0]));
 			Integer qnt = Integer.parseInt(param[1]);
-			CartController.addProduct(cart, product, qnt);
+			if (qnt > 0) {
+				CartController.addProduct(cart, product, qnt);
+			} else if (qnt < 0) {
+				CartController.removeProduct(cart, product, qnt);
+			}
 			session.setAttribute("cart", cart);
 			response.sendRedirect(request.getContextPath() + "/products");
-		}else if(request.getParameter("bought") != null){
+		} else if (request.getParameter("bought") != null) {
 			session.setAttribute("cart", cart);
 			response.sendRedirect(request.getContextPath() + "/check");
 		} else {
 			if (request.getParameter("remove") != null) {
 				Product product = new Product();
-				String[] param  = request.getParameter("productID").split("-");
+				String[] param = request.getParameter("productID").split(":");
 				product = pc.getProduct(Integer.parseInt(param[0]));
 				Integer qnt = Integer.parseInt(param[1]);
-				CartController.removeProduct(cart, pc.getProduct(Integer.parseInt(request.getParameter("remove"))));
+				CartController.removeProduct(cart, pc.getProduct(Integer.parseInt(request.getParameter("remove"))),qnt);
 			} else if (request.getParameter("add") != null) {
 				Product product = new Product();
-				String[] param  = request.getParameter("productID").split("-");
+				String[] param = request.getParameter("productID").split(":");
 				product = pc.getProduct(Integer.parseInt(param[0]));
 				Integer qnt = Integer.parseInt(param[1]);
 				CartController.addProduct(cart, product, qnt);

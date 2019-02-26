@@ -14,23 +14,23 @@
 					<a href='./products?productSelected=${product.id}'>${product.name}</a>
 				</p>
 				<p>
-					<a>Price: ${product.price} *
-						${sessionScope.cart.products.get(product)} = ${product.price * sessionScope.cart.products.get(product)}</a>
+					<a id = 'p${product.id}'>Price: ${product.price} *
+						${sessionScope.cart.products.get(product)} = ${product.price * sessionScope.cart.products.get(product)} UAH</a>
 				</p>
 				<p>
-					<input type='button' onclick="minus('${product.id}')" value='-' /><span
-						id='q${product.id}'>1</span>
-						<input type='button' onclick="plus('${product.id}')" value='+' />
+					<input type='button' onclick="minus('${product.id}')" value='-'
+						id='minus' /><span id='q${product.id}'>${sessionScope.cart.products.get(product)}</span> <input
+						type='button' onclick="plus('${product.id}')" value='+' id='plus' />
 				</p>
 			</div>
 		</c:forEach>
 	</div>
 	<div class='content_right'>
-		<p class='content_right_p'>totalcost :
-			${sessionScope.cart.totalCost}</p>
+		<p class='content_right_p' id = 'ttlCost'><b>Totalcost :
+			${sessionScope.cart.totalCost} UAH</b></p>
 		<a href='?bought=1'>Buy</a>
 	</div>
 </center>
 <%@include file="../../static/inc/footer.jsp"%>
 <script src="static/scripts/jquery-3.3.1.min.js"></script>
-<script src ="static/scripts/toCart.js"></script>
+<script src="static/scripts/checkout.js"></script>

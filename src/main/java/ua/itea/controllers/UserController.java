@@ -136,4 +136,28 @@ public class UserController {
 			}
 		}
 	}
+	
+	public boolean changeName(int id, String newName) {
+		try {
+			Statement st = worker.getConn().createStatement();
+			String sql ="UPDATE users SET name = '" + newName + "' WHERE id = '" + id + "'";
+			st.execute(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean changeAddress(int id, String newAddress) {
+		try {
+			Statement st = worker.getConn().createStatement();
+			String sql ="UPDATE users SET address = '" + newAddress + "' WHERE id = '" + id + "'";
+			st.execute(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
