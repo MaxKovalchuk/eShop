@@ -124,17 +124,14 @@ public class UserController {
 		return false;
 	}
 
-	public static void logout(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
-		if (request.getParameter("logout") != null) {
+	public static boolean logout(HttpSession session, String logout) {
+		if (logout != null) {
 			if (session != null) {
 				session.invalidate();
-				try {
-					response.sendRedirect(request.getContextPath() + request.getServletPath());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean changeName(int id, String newName) {
