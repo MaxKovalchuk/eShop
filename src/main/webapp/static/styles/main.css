@@ -32,6 +32,10 @@ body{
     padding: 10px;
     border-radius: 10px;
 }
+.header .NoRadius{
+    border-radius: 0px;
+    background: black;
+}
 .header ul li+li{
     margin-left:10px ;
 }
@@ -40,13 +44,15 @@ body{
 	background : black;
 	padding: 0;
 }
+.header ul .divider2{
+	flex-grow:3;
+	background : black;
+	padding: 0;
+}
 .header ul li a {
     text-decoration: none;
     color: black;
     font-size: 22px;
-}
-.hover :hover{
-    padding: 0 25px;
 }
 .header ul  .active{
     background: lightgrey;
@@ -74,7 +80,6 @@ body{
     width: 100%;
     background: white;
     flex-grow: 1;
-    white-space: wrap;
 }
 .content_flex{
     display: flex;
@@ -82,12 +87,17 @@ body{
     flex-grow: 1;
     white-space: wrap;
 }
+ .conten_products{
+ 	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: auto;
+ }
 .products_bloc{
     margin: 50px 2%;
-    height: 360px;
-    width: 20%;
+    height: 362px;
+    width: 250px;
     border: 1px solid black;
-    float: left;
  }
  .products_bloc a{
     margin: 0;
@@ -132,6 +142,116 @@ body{
 }
 .chek_button{
     text-align: center;
+}
+.Concten_divider{
+	margin:50px auto;
+}
+.input{
+	padding: 4px;
+    background: black;
+    color: whitesmoke;
+    border-style: unset;
+    border-radius: 15px;
+    margin-right: 10px;
+}
+.textArea{
+	cols: 21;
+	rows: 5;
+	name: comment;
+	resize: none; 
+	background: black;
+	color: white;
+}
+.radio_btn{
+    color: white;
+    background: black;
+}
+/*****_______ Profile _______*****/ 
+
+.Concten_divider ul{
+    list-style: none;
+    padding: 15px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+.Concten_divider li{
+	padding: 10px;
+}
+/*****_______ User _______*****/ 
+.radio{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: black;
+    border-radius: 10px;
+  }
+  
+.container:hover input ~ .checkmark {
+    background-color: black;
+  }
+  
+.container input:checked ~ .checkmark {
+    background-color: black;
+  }
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+.container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+.container .checkmark:after {
+    top: 8px;
+    left: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 10px;
+    background: white;
+  }
+.container{
+    margin-right: 5px;
+}
+.pages{
+	margin-bottom: 10px;
+}
+.pages a{
+	text-decoration: none;
+    color: black;
+    font-size: 22px;
+}
+/*****_______ Cart _______*****/ 
+.Empty{
+	margin-top: 150px;
 }
 /*****_______ FOOTER _______*****/ 
 .footer{

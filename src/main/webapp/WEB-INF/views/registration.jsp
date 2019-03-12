@@ -7,34 +7,34 @@
 		<form action="" method="post">
 			<table>
 				<td>
-					<table>
+					<table class='Concten_divider'>
 						<tr>
 							<td>Login</td>
-							<td><input type='email' name='login'
+							<td><input class='input' type='email' name='login'
 								value='${login}' /></td>
 						</tr>
 						<tr>
 							<td>Name</td>
-							<td><input type='text' name='name'
+							<td><input class='input' type='text' name='name'
 								value='${name}' /></td>
 						</tr>
 						<tr>
 							<td>Password</td>
-							<td><input type='password' name='password' /></td>
+							<td><input  class='input' type='password' name='password' /></td>
 						</tr>
 						<tr>
 							<td>Retype password</td>
-							<td><input type='password' name='repassword' /></td>
+							<td><input  class='input' type='password' name='repassword' /></td>
 						</tr>
 						<tr>
 							<td>Age</td>
-							<td><input type='number' name='age'
+							<td><input class='input' type='number' name='age'
 								value='${age}' /></td>
 						</tr>
 						<tr>
 							<td>Gender</td>
-							<td>Male <input type='radio' name='gender' value='M' ${genderM}/>
-								Female <input type='radio' name='gender' value='F' ${genderF}/>
+							<td>Male <input class='radio_btn' type='radio' name='gender' value='M' ${genderM}/>
+								Female <input class='radio_btn' type='radio' name='gender' value='F' ${genderF}/>
 							</td>
 						</tr>
 						<tr>
@@ -47,17 +47,17 @@
 						</tr>
 						<tr>
 							<td>Comment</td>
-							<td><textarea cols='10' rows='5' name='comment'
+							<td><textarea class='textArea' name='comment'
 									value='${comment}'>
 								</textarea></td>
 						</tr>
 						<tr>
 							<td>I agree to install Amigo Broswer</td>
-							<td><input name='agree' type='checkbox'
+							<td><input  class='input' name='agree' type='checkbox'
 								<c:if test = "${agree != null}">checked</c:if>></td>
 						</tr>
 						<tr>
-							<td><input type='submit' value='send'></td>
+							<td><input class='input' type='submit' value='send'></td>
 						</tr>
 					</table>
 				</td>

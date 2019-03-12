@@ -1,6 +1,5 @@
 package ua.itea.controllers;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,23 +9,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import dao.UserDAO;
 import factoryDao.DaoFactory;
-import ua.itea.models.Product;
 import ua.itea.models.User;
 
 public class UserController {
 	private DBWorker worker;
 	private String salt = "labunskiy";
 
-	public UserController(DBWorker worker) {
-		this.worker = worker;
+	public UserController() {
+		this.worker = new DBWorker();
 	}
 
 	public User getUser(int id) {
@@ -133,11 +131,11 @@ public class UserController {
 		}
 		return false;
 	}
-	
+
 	public boolean changeName(int id, String newName) {
 		try {
 			Statement st = worker.getConn().createStatement();
-			String sql ="UPDATE users SET name = '" + newName + "' WHERE id = '" + id + "'";
+			String sql = "UPDATE users SET name = '" + newName + "' WHERE id = '" + id + "'";
 			st.execute(sql);
 			return true;
 		} catch (SQLException e) {
@@ -145,11 +143,11 @@ public class UserController {
 		}
 		return false;
 	}
-	
+
 	public boolean changeAddress(int id, String newAddress) {
 		try {
 			Statement st = worker.getConn().createStatement();
-			String sql ="UPDATE users SET address = '" + newAddress + "' WHERE id = '" + id + "'";
+			String sql = "UPDATE users SET address = '" + newAddress + "' WHERE id = '" + id + "'";
 			st.execute(sql);
 			return true;
 		} catch (SQLException e) {

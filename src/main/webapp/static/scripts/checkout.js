@@ -41,7 +41,8 @@ function buy(myId, oldQnt, pm) {
 			} else {
 				ttlprice = +ttlprice - +infoPrice;
 			}
-			document.getElementById("ttlCost").innerHTML = "<b>Totalcost : " + ttlprice + " UAH</b>";
+			document.getElementById("ttlCost").innerHTML = "<b>Totalcost : "
+					+ ttlprice + " UAH</b>";
 		}
 	});
 }

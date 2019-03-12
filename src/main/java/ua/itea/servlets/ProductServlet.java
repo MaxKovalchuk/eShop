@@ -26,6 +26,106 @@ public class ProductServlet extends HttpServlet {
 	public ProductServlet() {
 	}
 
+	public static HttpSession session() {
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		return attr.getRequest().getSession(true);
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String get(ModelMap model, @RequestParam(value = "productSelected", required = false) String productSelected,
+			@RequestParam(value = "search", required = false) String search,
+			@RequestParam(value = "logout", required = false) String logout,
+			@RequestParam(value = "page", required = false) String page) {
+		ProductController pc = new ProductController();
+		if (productSelected != null) {
+			Product product = pc.getProduct(Integer.parseInt(productSelected));
+			model.addAttribute("product", product);
+			return "singleProduct";
+		} else if (search != null) {
+			List<Product> products = pc.search(search);
+			double pages = products.size() / 12;
+			model.addAttribute("pages", (int) Math.ceil(pages));
+			model.addAttribute("products", products);
+			return "productsView";
+		} else {
+			page = page == null ? "1" : page;
+			List<Product> products = pc.getSelectedPageProducts(page);
+			model.addAttribute("products", products);
+			List<Product> allProducts = pc.getAllProducts();
+			double pages = allProducts.size() / 12;
+			model.addAttribute("pages", (int) Math.ceil(pages));
+			HttpSession session = session();
+			UserController.logout(session, logout); // make redirect to current URL
+			model.addAttribute("session", session);
+			return "productsView";
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public String post(ModelMap model,
+			@RequestParam(value = "productSelected", required = false) String productSelected,
+			@RequestParam(value = "search", required = false) String search,
+			@RequestParam(value = "logout", required = false) String logout,
+			@RequestParam(value = "phones", required = false) String phones,
+			@RequestParam(value = "laptops", required = false) String laptops,
+			@RequestParam(value = "watches", required = false) String watches,
+			@RequestParam(value = "goToProducts", required = false) String goToProducts) {
+		ProductController pc = new ProductController();
+		HttpSession session = session();
+		if (search != null) {
+			List<Product> products;
+			double pages;
+			phones = phones == null ? "0" : phones;
+			laptops = laptops == null ? "0" : laptops;
+			watches = watches == null ? "0" : watches;
+			if (phones != null && laptops != null && watches != null) {
+				products = pc.getSelectedPageProducts("1");
+				pages = products.size() / 12;
+				model.addAttribute("products", products);
+				model.addAttribute("pages", (int) Math.ceil(pages));
+				UserController.logout(session, logout); // make redirect to current URL
+				model.addAttribute("session", session);
+				return "productsView";
+			}
+			int[] categoryID = { Integer.parseInt(phones), Integer.parseInt(laptops), Integer.parseInt(watches) };
+			products = pc.getSelectedCategoryProducts(categoryID);
+			pages = products.size() / 12;
+			if (phones.equals("0") && laptops.equals("0") && watches.equals("0")) {
+				model.addAttribute("phones", "checked");
+				model.addAttribute("laptops", "checked");
+				model.addAttribute("watches", "checked");
+				products = pc.getAllProducts();
+				pages = products.size() / 12;
+				model.addAttribute("products", products);
+				model.addAttribute("pages", (int) Math.ceil(pages));
+				UserController.logout(session, logout); // make redirect to current URL
+				model.addAttribute("session", session);
+				return "productsView";
+			} else if (goToProducts != null) {
+				products = pc.getSelectedPageProducts("1");
+				pages = products.size() / 12;
+				session = session();
+				UserController.logout(session, logout); // make redirect to current URL
+				model.addAttribute("session", session);
+				return "productsView";
+			} else {
+				model.addAttribute("phones", phones.equals("1") ? "checked" : "");
+				model.addAttribute("laptops", laptops.equals("2") ? "checked" : "");
+				model.addAttribute("watches", watches.equals("3") ? "checked" : "");
+			}
+			model.addAttribute("products", products);
+			model.addAttribute("pages", (int) Math.ceil(pages));
+
+		} else if (productSelected != null) {
+			Product product = pc.getProduct(Integer.parseInt(productSelected));
+			model.addAttribute("product", product);
+			return "singleProduct";
+		}
+		UserController.logout(session, logout); // make redirect to current URL
+		model.addAttribute("session", session);
+		return "productsView";
+	}
+	
 //	@Override
 //	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 //			throws ServletException, IOException {
@@ -82,66 +182,5 @@ public class ProductServlet extends HttpServlet {
 //		} catch (IllegalStateException ex) {
 //		}
 //	}
-
-	public static HttpSession session() {
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		return attr.getRequest().getSession(true);
-	}
-
-	@RequestMapping(method = RequestMethod.GET, params = { "productSelected", "search", "logout" })
-	public String get(ModelMap model, @RequestParam("productSelected") String productSelected,
-			@RequestParam("search") String search, @RequestParam("logout") String logout) {
-		ProductController pc = new ProductController(new DBWorker());
-		if (productSelected != null) {
-			Product product = pc.getProduct(Integer.parseInt(productSelected));
-			model.addAttribute("product", product);
-			return "singleProduct";
-		} else if (search != null) {
-			List<Product> products = pc.search(search);
-			model.addAttribute("products", products);
-			return "productsView";
-		} else {
-			List<Product> products = pc.getAllProducts();
-			model.addAttribute("products", products);
-			HttpSession session = session();
-			UserController.logout(session, logout); // make redirect to current URL
-			model.addAttribute("session", session);
-			return "productsView";
-		}
-	}
-
-	@RequestMapping(method = RequestMethod.POST, params = { "productSelected", "search", "logout", "phones", "laptops",
-			"watches" })
-	public String post(ModelMap model, @RequestParam("productSelected") String productSelected,
-			@RequestParam("search") String search, @RequestParam("logout") String logout,
-			@RequestParam("phones") String phones, @RequestParam("laptops") String laptops,
-			@RequestParam("watches") String watches) {
-		ProductController pc = new ProductController(new DBWorker());
-		HttpSession session = session();
-		if (search != null) {
-			phones = phones == null ? "0" : phones;
-			laptops = laptops == null ? "0" : laptops;
-			watches = watches == null ? "0" : watches;
-			int[] categoryID = { Integer.parseInt(phones), Integer.parseInt(laptops), Integer.parseInt(watches) };
-			List<Product> products = pc.getSelectedProducts(categoryID);
-			model.addAttribute("products", products);
-			if (phones.equals("0") && laptops.equals("0") && watches.equals("0")) {
-				model.addAttribute("phones", "checked");
-				model.addAttribute("laptops", "checked");
-				model.addAttribute("watches", "checked");
-			} else {
-				model.addAttribute("phones", phones.equals("1") ? "checked" : "");
-				model.addAttribute("laptops", laptops.equals("2") ? "checked" : "");
-				model.addAttribute("watches", watches.equals("3") ? "checked" : "");
-			}
-		} else if (productSelected != null) {
-			Product product = pc.getProduct(Integer.parseInt(productSelected));
-			model.addAttribute("product", product);
-			return "singleProduct";
-		}
-		UserController.logout(session, logout); // make redirect to current URL
-		model.addAttribute("session", session);
-		return "productsView";
-	}
 
 }

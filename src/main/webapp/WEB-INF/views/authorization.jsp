@@ -5,19 +5,19 @@
 <body>
 	<center class='content'>
 		<form action='' method = 'post'>
-			<table>
+			<table class='Concten_divider'>
 				<tr>
 					<td>Login</td>
-					<td><input type='text' name='login' value = '${login}'/></td>
+					<td><input class='input' type='text' name='login' value = '${login}'/></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>Password</td>
-					<td><input type='password' name='password' /></td>
+					<td><input class='input' type='password' name='password' /></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type='submit' value='send' /></td>
+					<td><input class='input' type='submit' value='send' /></td>
 				</tr>
 				<tr>
 					<td></td>

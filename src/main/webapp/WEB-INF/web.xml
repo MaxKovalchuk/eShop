@@ -5,75 +5,12 @@
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
 	<servlet>
-		<servlet-name>Authorization</servlet-name>
+		<servlet-name>Dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<servlet>
-		<servlet-name>Registration</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>Products</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<!-- <servlet> <servlet-name>RegistrationServlet</servlet-name> <display-name>RegistrationServlet</display-name> 
-		<description></description> <servlet-class>ua.itea.servlets.RegistrationServlet</servlet-class> 
-		</servlet> -->
-	<!-- <servlet> <servlet-name>ProductServlet</servlet-name> <display-name>products</display-name> 
-		<description></description> <servlet-class>ua.itea.servlets.ProductServlet</servlet-class> 
-		</servlet> -->
-	<!--<servlet> <servlet-name>AuthorizationServlet</servlet-name> <display-name>AuthorizationServlet</display-name> 
-		<description></description> <servlet-class>ua.itea.servlets.AuthorizationServlet</servlet-class> 
-		</servlet> -->
-	<servlet>
-		<servlet-name>CartServlet</servlet-name>
-		<display-name>CartServlet</display-name>
-		<description></description>
-		<servlet-class>ua.itea.servlets.CartServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>CheckServlet</servlet-name>
-		<display-name>CheckServlet</display-name>
-		<description></description>
-		<servlet-class>ua.itea.servlets.CheckServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>ProfileServlet</servlet-name>
-		<display-name>ProfileServlet</display-name>
-		<description></description>
-		<servlet-class>ua.itea.servlets.ProfileServlet</servlet-class>
-	</servlet>
 	<servlet-mapping>
-		<servlet-name>Authorization</servlet-name>
+		<servlet-name>Dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Registration</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Products</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	<!-- <servlet-mapping> <servlet-name>ProductServlet</servlet-name> <url-pattern>/products</url-pattern> 
-		</servlet-mapping> -->
-	<!-- <servlet-mapping> <servlet-name>RegistrationServlet</servlet-name> 
-		<url-pattern>/registration</url-pattern> </servlet-mapping> -->
-	<!--<servlet-mapping> <servlet-name>AuthorizationServlet</servlet-name> 
-		<url-pattern>/authorization</url-pattern> </servlet-mapping> -->
-	<servlet-mapping>
-		<servlet-name>CartServlet</servlet-name>
-		<url-pattern>/cart</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>CheckServlet</servlet-name>
-		<url-pattern>/check</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ProfileServlet</servlet-name>
-		<url-pattern>/profile</url-pattern>
 	</servlet-mapping>
 </web-app>

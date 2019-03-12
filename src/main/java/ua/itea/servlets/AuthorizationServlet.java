@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.itea.controllers.DBWorker;
 import ua.itea.controllers.UserController;
@@ -57,22 +59,27 @@ public class AuthorizationServlet extends HttpServlet {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String get(ModelMap model) {
+	public String get(RedirectAttributes redirectAttributes,@RequestParam(value = "search", required = false) String search, ModelMap model) {
 		HttpSession session = session();
 		model.addAttribute("session", session);
+		if(search != null) {
+			redirectAttributes.addAttribute("search", search);
+			return new ModelAndView("redirect:/products").getViewName();
+		}
 		return "authorization";
 	}
 
-	@RequestMapping(method = RequestMethod.POST, params = { "login", "password" })
-	public String post(ModelMap model, @RequestParam("login") String login, @RequestParam("password") String password,
-			@RequestParam("logout") String logout) {
-		UserController uc = new UserController(new DBWorker());
+	@RequestMapping(method = RequestMethod.POST)
+	public String post(ModelMap model, @RequestParam(value = "login", required = false) String login,
+			@RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "logout", required = false) String logout) {
+		UserController uc = new UserController();
 		HttpSession session = null;
 		if (uc.authorizate(login, password)) {
 			session = session();
 			session.setAttribute("user", uc.getUser(login));
 			model.addAttribute("session", session);
-			return "productsView";
+			return new ModelAndView("redirect:/products").getViewName();
 		} else {
 			if (logout == null)
 				model.addAttribute("errorText", "<font color = 'red'>Invalid login or password");

@@ -1,29 +1,32 @@
 package ua.itea.controllers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class DBWorker {
 	private final static String GET_USERS = "SELECT * FROM users";
 	private final static String CHECK_USER = "SELECT name FROM users WHERE login=? AND password=?";
-	Connection conn;
-	Statement st;
-	String salt = "labunskiy";
+	private Connection conn;
+	private Statement st;
+	private DataSource ds;
+	private String salt = "labunskiy";
 
 	public DBWorker() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (Exception ex) {
-		}
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("dbean.xml");
+		ds = (DataSource) context.getBean("dataSource");
 		System.out.print("Connection.....");
 		try {
-			ResourceBundle config = ResourceBundle.getBundle("config");
-			conn = DriverManager.getConnection("jdbc:mysql://" + config.getString("host") + "/" + config.getString("db")
-					+ "?" + "user=" + config.getString("user") + "&password=" + config.getString("psw"));
+			System.out.println(ds.toString());
+			conn = ds.getConnection();
 			System.out.println("obtained");
 			st = conn.createStatement();
 		} catch (SQLException ex) {
@@ -40,6 +43,14 @@ public class DBWorker {
 
 	public void setConn(Connection conn) {
 		this.conn = conn;
+	}
+	
+	public DataSource getDs() {
+		return ds;
+	}
+
+	public void setDs(DataSource ds) {
+		this.ds = ds;
 	}
 
 	public String getRows() {
